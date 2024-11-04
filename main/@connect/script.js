@@ -15043,15 +15043,6 @@ const n3 = [{
 		features: ["moderation", "kicking"],
 		categoryId: "CAPTCHAGame",
 		galleryId: "let-me-finish"
-	}, {
-		name: "The Jackbox Survey Screamble",
-		tag: "bigsurvey",
-		wrapper: "vue",
-		isPublic: !0,
-		directory: "standalone/bigsurvey",
-		features: ["moderation","kicking","dropInDropOut"],
-		categoryId: "BigSurveyGame",
-		galleryId: "survey-scramble"
 	}],
     Xl = t => n3.find(e => e.tag === t || e.galleryId === t || e.categoryId === t);
 
