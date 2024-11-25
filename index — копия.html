@@ -119,39 +119,34 @@
             questionElement.innerText = questions[currentQuestionIndex];
         }
 
-function submitResponse() {
-    const response = document.getElementById('response').value;
-    if (response.trim() === "") {
-        alert("Пожалуйста, введите ответ.");
-        return;
-    }
+        function submitResponse() {
+            const response = document.getElementById('response').value;
+            if (response.trim() === "") {
+                alert("Пожалуйста, введите ответ.");
+                return;
+            }
 
-    // Проверка на наличие пробелов
-    if (response.trim().includes(" ")) {
-        alert("Напишите 1 слово!");
-        return;
-    }
+            fetch(webhooks[currentQuestionIndex], {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: response
+                })
+            })
+            .then(() => {
+                alert("Ваш ответ отправлен!");
+                document.getElementById('response').value = ""; // Очистка поля ввода
+                currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Переход к следующему вопросу
+                displayQuestion(); // Обновление вопроса
+            })
+            .catch(err => {
+                console.error("Ошибка отправки ответа:", err);
+                alert("Произошла ошибка при отправке ответа.");
+            });
+        }
 
-    fetch(webhooks[currentQuestionIndex], {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            content: response
-        })
-    })
-    .then(() => {
-        alert("Ваш ответ отправлен!");
-        document.getElementById('response').value = ""; // Очистка поля ввода
-        currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Переход к следующему вопросу
-        displayQuestion(); // Обновление вопроса
-    })
-    .catch(err => {
-        console.error("Ошибка отправки ответа:", err);
-        alert("Произошла ошибка при отправке ответа.");
-    });
-}
         // Инициализация
         displayQuestion();
     </script>
