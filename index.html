@@ -76,17 +76,27 @@
             background: url('gif/postgameBg_40534656.gif') no-repeat center center fixed;
             background-size: cover; /* Заполнение фона */
         }
+        .version {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            color: white; /* Цвет текста */
+            background-color : rgba(0, 0, 0, 0.5); /* Полупрозрачный фон для лучшей читаемости */
+            padding: 5px 10px; /* Отступы вокруг текста */
+            border-radius: 5px; /* Скругление углов */
+        }
     </style>
 </head>
 <body>
 
     <div class="background"></div>
+    <div class="version">Версия 1.0</div>
 
     <h1>Jackbox Опросная Схватка Опросник</h1>
     <p>Мы просим вас поделиться своими анонимными отзывами для перевода игры The Jackbox Survey Scramble!</p>
-    <p>Пожалуйста, ответьте на следующие вопросы, используя только ОДНО СЛОВО (если ваш ответ должен<p>
-    <p>состоять из двух слов, например: "морская свинка", напишите "морскаясвинка"). Проявите креативность!</p>
-    <p>Вы можете отправлять ответы столько раз, сколько захотите, но старайтесь избегать повторений. 
+    <p>Пожалуйста, ответьте на следующие вопросы, используя только ОДНО СЛОВО (если ваш ответ должен состоять из двух слов, например: "морская свинка", напишите "морскаясвинка"). Проявите креативность!</p>
+    <p>Вы можете отправлять ответы столько раз, сколько захотите, но старайтесь избегать повторений.</p>
     <p>Ориентируйтесь на первое, что приходит на ум, и не стесняйтесь быть необычными и забавными!</p>
 
     <div class="question-container">
@@ -96,7 +106,7 @@
     </div>
 
     <script>
- const questions = [
+        const questions = [
             "Одним словом... Что такое хороший перекус?",
             "В одном слове... Какие из этих животных, по вашему мнению, могут править миром?",
             "В одном слове... Что бы вы хотели на необитаемом острове?",
@@ -119,39 +129,40 @@
             questionElement.innerText = questions[currentQuestionIndex];
         }
 
-function submitResponse() {
-    const response = document.getElementById('response').value;
-    if (response.trim() === "") {
-        alert("Пожалуйста, введите ответ.");
-        return;
-    }
+        function submitResponse() {
+            const response = document.getElementById('response').value;
+            if (response.trim() === "") {
+                alert("Пожалуйста, введите ответ.");
+                return;
+            }
 
-    // Проверка на наличие пробелов
-    if (response.trim().includes(" ")) {
-        alert("Напишите 1 слово!");
-        return;
-    }
+            // Проверка на наличие пробелов
+            if (response.trim().includes(" ")) {
+                alert("Напишите 1 слово!");
+                return;
+            }
 
-    fetch(webhooks[currentQuestionIndex], {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            content: response
-        })
-    })
-    .then(() => {
-        alert("Ваш ответ отправлен!");
-        document.getElementById('response').value = ""; // Очистка поля ввода
-        currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Переход к следующему вопросу
-        displayQuestion(); // Обновление вопроса
-    })
-    .catch(err => {
-        console.error("Ошибка отправки ответа:", err);
-        alert("Произошла ошибка при отправке ответа.");
-    });
-}
+            fetch(webhooks[currentQuestionIndex], {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: response
+                })
+            })
+            .then(() => {
+                alert("Ваш ответ отправлен!");
+                document.getElementById('response').value = ""; // Очистка поля ввода
+                currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Переход к следующему вопросу
+                displayQuestion(); // Обновление вопроса
+            })
+            .catch(err => {
+                console.error("Ошибка отправки ответа:", err);
+                alert("Произошла ошибка при отправке ответа.");
+            });
+        }
+
         // Инициализация
         displayQuestion();
     </script>
