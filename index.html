@@ -1,155 +1,114 @@
-<!DOCTYPE html>
-<html lang="ru">
+﻿<!DOCTYPE html>
+<html lang="en-US" class="js">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jackbox Опросная Схватка Опросник</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Goose|Goose2&display=swap">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Jackbox.SU</title>
+    <meta name="description" content="Jackbox.su - ваш контроллер для игр от Jackbox Games. Вперёд, создавать странные воспоминания!">
+    <meta name="application-name" content="Jackbox.SU">
+
+    <meta name="og:url" content="https://jackbox.su/">
+    <meta name="og:title" content="Jackbox.SU">
+    <meta name="og:type" content="website">
+    <meta name="og:description" content="Jackbox.su - ваш контроллер для игр от Jackbox Games. Вперёд, создавать странные воспоминания!">
+    <meta name="og:image" content="./src/images/favicon-196x196.png">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="supported-color-schemes" content="">
+    <meta name="color-scheme" content="#4254F4">
+    <meta name="theme-color" content="#4254F4">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="favicon-32.png" sizes="32x32">
+    <!-- TODO: Make SVG favicon for light and dark mode! -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
     <style>
-        @font-face {
-            font-family: 'Goose';
-            src: url('font/Goose.ttf') format('truetype');
-        }
-        @font-face {
-            font-family: 'Goose2';
-            src: url('font/Goose2.ttf') format('truetype');
+        html {
+            background-color: #0a1420;
         }
 
-        body {
-            font-family: 'Goose', sans-serif;
-            text-align: center;
-            background-color: #00113b; /* Цвет фона */
-            padding: 50px;
-            color: white; /* Цвет текста белый */
-            position: relative;
-            overflow: hidden;
-            height: 100vh; /* Высота на весь экран */
-            margin: 0; /* Убираем отступы */
-        }
-        h1 {
-            font-family: 'Goose', sans-serif; /* Шрифт для заголовка */
-            font-size: 48px;
-            margin-bottom: 10px; /* Уменьшенный отступ */
-            color: orange; /* Цвет заголовка оранжевый */
-        }
-        p {
-            font-size: 14px; /* Уменьшенный размер текста */
-            margin-bottom: 10px; /* Уменьшенный отступ */
-        }
-        .question-container {
-            border: 2px solid white; /* Белая рамка */
-            padding: 20px; /* Отступ внутри рамки */
-            margin-top: 20px; /* Отступ сверху */
-            display: inline-block; /* Центрирование контейнера */
-            background-color: white; /* Фоновый цвет контейнера */
-            color: black; /* Цвет текста внутри контейнера */
-            border-radius: 10px; /* Скругление углов рамки */
-            width: calc(100% - 60px); /* Ширина контейнера */
-            max-width: 600px; /* Максимальная ширина контейнера */
-        }
-        .question {
-            font-size: 20px;
-            margin-top: 10px; /* Отступ сверху для вопроса */
-        }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            margin-bottom: 20px;
-            border-radius: 5px; /* Скругление углов */
-            border: 1px solid #ccc; /* Цвет границы */
-            background-color: #fff; /* Цвет фона поля ввода */
-            color: #000; /* Цвет текста в поле ввода */
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .background {
+        .loader-status {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            margin-top: -25px;
+            margin-left: -25px;
+        }
+
+        .loader-status svg {
             width: 100%;
             height: 100%;
-            z-index: -1; /* Позади других элементов */
-            background: url('gif/postgameBg_40534656.gif') no-repeat center center fixed;
-            background-size: cover; /* Заполнение фона */
-        }
-    </style>
-</head>
-<body>
-
-    <div class="background"></div>
-
-    <h1>Jackbox Опросная Схватка Опросник</h1>
-    <p>Мы просим вас поделиться своими анонимными отзывами для перевода игры The Jackbox Survey Scramble!</p>
-    <p>Пожалуйста, ответьте на следующие вопросы, используя только ОДНО СЛОВО (если ваш ответ должен<p>
-    <p>состоять из двух слов, например: "морская свинка", напишите "морскаясвинка"). Проявите креативность!</p>
-    <p>Вы можете отправлять ответы столько раз, сколько захотите, но старайтесь избегать повторений. 
-    <p>Ориентируйтесь на первое, что приходит на ум, и не стесняйтесь быть необычными и забавными!</p>
-
-    <div class="question-container">
-        <div class="question" id="question"></div>
-        <input type="text" id="response" placeholder="Ваш ответ...">
-        <button onclick="submitResponse()">Отправить</button>
-    </div>
-
-    <script>
- const questions = [
-            "Одним словом... Что такое хороший перекус?",
-            "В одном слове... Какие из этих животных, по вашему мнению, могут править миром?",
-            "В одном слове... Что бы вы хотели на необитаемом острове?",
-            "В одном слове... Какие имена есть на А?",
-            "Заполните пропуск: «____ Человек»"
-        ];
-
-        const webhooks = [
-            'https://ptb.discord.com/api/webhooks/1310352231211470878/T4Od43tQp0bMejgfLKJUyfLOtY_koGab5iA0mbW8vCiD2sufQfAOHVJlHlhoTGgsZzF5',
-            'https://ptb.discord.com/api/webhooks/1310352238430130266/3R1eTlF19CStD1S7oNmLSOMUqgFsvsb9-RbirF0SEKGsR3AH9cJ40-SBDxhxBpb1au8I',
-            'https://ptb.discord.com/api/webhooks/1310352242267783278/lRdv-p7VtZglZtNAInfFrcxpFIOM05Q4rqf2oKlBK5W_jiw3iiFB9FhbNS7oqBR47J9X',
-            'https://ptb.discord.com/api/webhooks/1310352245061058601/Z5_hX0sOkn1WpteGKbP80NEEBlLGgrLMX_D2CB-HQ34MejQ8i4elYzBYxVHCHcO0lPLH',
-            'https://ptb.discord.com/api/webhooks/1310352246202044455/mc428sV1-Khxw2kuEq91nd22SVm1cfEaMUg9tvawFGPiPAd3WQmNvYbmUpuK3WX-S9iQ'
-        ];
-
-        let currentQuestionIndex = 0;
-
-        function displayQuestion() {
-            const questionElement = document.getElementById('question');
-            questionElement.innerText = questions[currentQuestionIndex];
+            animation: loader-loading 0.5s alternate infinite ease-in-out;
         }
 
-        function submitResponse() {
-            const response = document.getElementById('response').value;
-            if (response.trim() === "") {
-                alert("Пожалуйста, введите ответ.");
-                return;
+        .loader-status p {
+            position: absolute;
+            top: 110%;
+            left: -35px;
+            width: 120px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 11px;
+            line-height: 1.2;
+        }
+
+        .loader-status.error p,
+        .loader-status.error svg {
+            cursor: pointer;
+            color: #f5f7f7;
+            fill: #ce4949;
+            animation: none;
+        }
+
+        @keyframes loader-loading {
+            0% {
+                fill: #1f2937;
             }
 
-            fetch(webhooks[currentQuestionIndex], {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    content: response
-                })
-            })
-            .then(() => {
-                alert("Ваш ответ отправлен!");
-                document.getElementById('response').value = ""; // Очистка поля ввода
-                currentQuestionIndex = (currentQuestionIndex + 1) % questions.length; // Переход к следующему вопросу
-                displayQuestion(); // Обновление вопроса
-            })
-            .catch(err => {
-                console.error("Ошибка отправки ответа:", err);
-                alert("Произошла ошибка при отправке ответа.");
-            });
+            100% {
+                fill: #353f4d;
+            }
         }
+    </style>
 
-        // Инициализация
-        displayQuestion();
+    <script async="" src="gtag/js?id=G-V1QJVQMYF1"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || []
+
+        function gtag() {
+            dataLayer.push(arguments)
+        }
+        gtag('js', new Date())
+        gtag('config', 'G-V1QJVQMYF1')
     </script>
+    <script type="module" crossorigin="" src="script-0.js"></script>
+    <link rel="stylesheet" crossorigin="" href="style-0.css">
+</head>
+
+<body>
+    <div class="loader-status">
+        <svg viewbox="0 0 100 100">
+            <path d="m16 40 31 14v37L16 76V62L0 54l16-14zM84 40 53 54v37l31-15V62l16-8-16-14zM50 10
+                    a18.81 18.81 0 0 1 19 19 49.36 49.36 0 0 1-1 8s1.65-4 3-4c2.6 0 1.4 7 1.4 7L50 50 27.6 40
+                    s-1.2-7 1.4-7c1.35 0 3 4 3 4a49.36 49.36 0 0 1-1-8 18.81 18.81 0 0 1 19-19Z"></path>
+        </svg>
+    </div>
+
+    <div id="app" class="app"></div>
+
 
 </body>
+
 </html>
